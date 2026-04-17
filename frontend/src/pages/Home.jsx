@@ -12,35 +12,78 @@ export default function Home() {
       <nav className="home-nav">
         <div className="home-nav-inner">
           <div className="auth-logo" style={{ margin: 0, justifyContent: 'flex-start' }}>
-            <div className="auth-logo-mark">🛡️</div>
+            <div className="auth-logo-mark">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M10 2L3 5v5c0 4.418 3.134 8.557 7 9.9C13.866 18.557 17 14.418 17 10V5L10 2z"
+                  fill="var(--text)" stroke="var(--brand)" strokeWidth="1.5"/>
+                <path d="M7 10l2 2 4-4" stroke="var(--brand)"
+                  strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
             <span className="auth-logo-name">GigShield</span>
             <span className="badge badge-blue" style={{ fontSize: 10 }}>AI-Powered</span>
           </div>
-          <div className="flex gap-8" style={{ alignItems: 'center' }}>
-            <button
-              className="btn-theme-toggle"
-              onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-              title="Toggle theme"
-            >
-              {theme === 'light' ? '🌙' : '☀️'}
-            </button>
-            <button className="btn btn-ghost btn-sm" onClick={() => navigate('/admin/login')} style={{ fontSize: 11, color: 'var(--text-3)' }}>
-              Admin
-            </button>
-            <button className="btn btn-ghost btn-sm" onClick={() => navigate('/login')}>
-              Login
-            </button>
-            <button className="btn btn-primary btn-sm" onClick={() => navigate('/register')}>
-              Get Started →
-            </button>
-          </div>
-        </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+  {/* Theme toggle — left-most, visually separated */}
+  <button
+    className="btn-theme-toggle"
+    onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+    title="Toggle theme"
+    style={{ marginRight: 10 }}
+  >
+    {theme === 'light'
+      ? <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M13.5 10A6 6 0 0 1 6 2.5a6 6 0 1 0 7.5 7.5z"/></svg>
+      : <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="8" cy="8" r="3"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.22 3.22l1.42 1.42M11.36 11.36l1.42 1.42M3.22 12.78l1.42-1.42M11.36 4.64l1.42-1.42"/></svg>
+    }
+  </button>
+
+  {/* Subtle divider */}
+  <div style={{ width: 1, height: 22, background: 'var(--border)', marginRight: 10 }} />
+
+  {/* Admin — very muted, tertiary action */}
+  <button
+    className="btn btn-sm"
+    onClick={() => navigate('/admin/login')}
+    style={{
+      background: 'transparent',
+      border: 'none',
+      color: 'var(--text-3)',
+      fontSize: 12,
+      fontWeight: 500,
+      padding: '6px 10px',
+    }}
+  >
+    Admin
+  </button>
+
+  {/* Login — secondary action */}
+  <button
+    className="btn btn-ghost btn-sm"
+    onClick={() => navigate('/login')}
+    style={{ fontSize: 13 }}
+  >
+    Login
+  </button>
+
+  {/* Get Started — primary CTA */}
+  <button
+    className="btn btn-primary btn-sm"
+    onClick={() => navigate('/register')}
+    style={{ fontSize: 13, paddingLeft: 16, paddingRight: 16 }}
+  >
+    Get Started →
+  </button>
+</div>
+    </div>
       </nav>
 
       {/* Hero */}
       <section className="home-hero fade-up">
         <div className="home-hero-badge">
-          <span>🚀</span> Trusted by 10,000+ gig workers across India
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M8 1l1.5 4.5H14l-3.5 2.5 1.5 4.5L8 10l-4 2.5 1.5-4.5L2 5.5h4.5L8 1z"/>
+          </svg>
+          Trusted by 10,000+ gig workers across India
         </div>
         <h1 className="home-hero-title">
           Income Protection for<br />
@@ -84,44 +127,75 @@ export default function Home() {
         <div className="grid-3" style={{ gap: 20, marginTop: 36 }}>
           {[
             {
-              icon: '⚡',
+              icon: (
+                <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M8 1v6l3 3" strokeLinecap="round"/>
+                  <circle cx="8" cy="8" r="7"/>
+                </svg>
+              ),
               iconBg: '#EFF6FF',
               title: 'Automatic Payouts',
               desc: 'No claims process. When a trigger event occurs — heavy rain, platform downtime — your payout is sent automatically within hours.',
             },
             {
-              icon: '🌦️',
+              icon: (
+                <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M12 7H11.26A4 4 0 1 0 6 12H12a2.5 2.5 0 0 0 0-5z"/>
+                  <path d="M8 6V3M6 4l2-1 2 1" strokeLinecap="round"/>
+                </svg>
+              ),
               iconBg: '#ECFDF5',
               title: 'Real-Time Weather Monitoring',
               desc: 'We monitor live IMD data 24/7. If rainfall exceeds your coverage threshold in your delivery zone, you get paid — instantly.',
             },
             {
-              icon: '🤖',
+              icon: (
+                <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <rect x="2" y="3" width="12" height="10" rx="2"/>
+                  <path d="M5 7h2M5 9.5h4M9 7h2" strokeLinecap="round"/>
+                </svg>
+              ),
               iconBg: '#FFFBEB',
               title: 'AI Risk Assessment',
               desc: 'Our AI calculates your personalized premium based on your city, platform, and earnings profile — fair pricing for every worker.',
             },
             {
-              icon: '📱',
+              icon: (
+                <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <rect x="4" y="1" width="8" height="14" rx="2"/>
+                  <path d="M7 12h2" strokeLinecap="round"/>
+                </svg>
+              ),
               iconBg: '#FEF2F2',
               title: 'Simple Mobile Dashboard',
               desc: 'Track your active policy, weather alerts, and payout history all in one place — designed for use on the go.',
             },
             {
-              icon: '🔒',
+              icon: (
+                <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <rect x="2" y="7" width="12" height="8" rx="1.5"/>
+                  <path d="M5 7V5a3 3 0 0 1 6 0v2"/>
+                  <circle cx="8" cy="11" r="1" fill="currentColor" stroke="none"/>
+                </svg>
+              ),
               iconBg: '#EFF6FF',
               title: 'No Paperwork, Ever',
               desc: 'Parametric insurance means payouts are triggered by data, not documentation. No receipts, no proof, no delays.',
             },
             {
-              icon: '💸',
+              icon: (
+                <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <rect x="1" y="3" width="14" height="10" rx="1.5"/>
+                  <path d="M1 6h14M5 10h2M9 10h2"/>
+                </svg>
+              ),
               iconBg: '#ECFDF5',
               title: 'Flexible Plans',
               desc: 'From ₹99/month Basic to ₹349/month Premium — choose coverage that fits your income and risk level.',
             },
           ].map((f) => (
             <div key={f.title} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              <div className="metric-icon" style={{ background: f.iconBg, fontSize: 20 }}>{f.icon}</div>
+              <div className="feature-icon">{f.icon}</div>
               <div>
                 <div style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontWeight: 700, fontSize: 15, marginBottom: 6 }}>{f.title}</div>
                 <div style={{ color: 'var(--text-2)', fontSize: 13, lineHeight: 1.6 }}>{f.desc}</div>
@@ -138,10 +212,50 @@ export default function Home() {
         <div style={{ display: 'flex', gap: 0, marginTop: 40, position: 'relative' }}>
           <div className="home-steps-line" />
           {[
-            { step: '01', icon: '👤', title: 'Create Account', desc: 'Enter your basic details — name, phone, email, and your delivery platform.' },
-            { step: '02', icon: '📋', title: 'Choose a Plan', desc: 'Pick Basic, Standard, or Premium coverage based on your earnings and risk.' },
-            { step: '03', icon: '✅', title: 'Get Covered', desc: 'Your policy activates instantly. We start monitoring weather in your zone.' },
-            { step: '04', icon: '💰', title: 'Get Paid', desc: 'When a trigger happens, your payout lands in your account — no action needed.' },
+            {
+              step: '01',
+              icon: (
+                <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <circle cx="8" cy="5" r="3"/>
+                  <path d="M2 14c0-3.314 2.686-5 6-5s6 1.686 6 5"/>
+                </svg>
+              ),
+              title: 'Create Account',
+              desc: 'Enter your basic details — name, phone, email, and your delivery platform.',
+            },
+            {
+              step: '02',
+              icon: (
+                <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M9 1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V6L9 1z"/>
+                  <path d="M9 1v5h5M5 9h6M5 11.5h4"/>
+                </svg>
+              ),
+              title: 'Choose a Plan',
+              desc: 'Pick Basic, Standard, or Premium coverage based on your earnings and risk.',
+            },
+            {
+              step: '03',
+              icon: (
+                <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M10 2L3 5v5c0 4.418 3.134 8.557 7 9.9C13.866 18.557 17 14.418 17 10V5L10 2z"/>
+                  <path d="M6 8l2 2 3-3" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              ),
+              title: 'Get Covered',
+              desc: 'Your policy activates instantly. We start monitoring weather in your zone.',
+            },
+            {
+              step: '04',
+              icon: (
+                <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <rect x="1" y="3" width="14" height="10" rx="1.5"/>
+                  <path d="M1 6h14M5 10h2M9 10h2"/>
+                </svg>
+              ),
+              title: 'Get Paid',
+              desc: 'When a trigger happens, your payout lands in your account — no action needed.',
+            },
           ].map((s) => (
             <div key={s.step} className="home-step">
               <div className="home-step-num">{s.icon}</div>
@@ -220,7 +334,14 @@ export default function Home() {
       {/* CTA Banner */}
       <section className="home-section">
         <div className="card-blue" style={{ textAlign: 'center', padding: '48px 40px' }}>
-          <div style={{ fontSize: 36, marginBottom: 12 }}>🛡️</div>
+          <div style={{ marginBottom: 12, display: 'flex', justifyContent: 'center' }}>
+            <svg width="40" height="40" viewBox="0 0 20 20" fill="none">
+              <path d="M10 2L3 5v5c0 4.418 3.134 8.557 7 9.9C13.866 18.557 17 14.418 17 10V5L10 2z"
+                fill="rgba(255,255,255,0.2)" stroke="white" strokeWidth="1.5"/>
+              <path d="M7 10l2 2 4-4" stroke="white"
+                strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
           <h2 style={{ color: 'white', fontSize: 24, marginBottom: 10, fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
             Don't let bad weather cost you your income
           </h2>
@@ -241,7 +362,14 @@ export default function Home() {
       {/* Footer */}
       <footer className="home-footer">
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center', marginBottom: 8 }}>
-          <div className="auth-logo-mark" style={{ width: 26, height: 26, fontSize: 13 }}>🛡️</div>
+          <div className="auth-logo-mark" style={{ width: 26, height: 26, fontSize: 13 }}>
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
+              <path d="M10 2L3 5v5c0 4.418 3.134 8.557 7 9.9C13.866 18.557 17 14.418 17 10V5L10 2z"
+                fill="var(--brand-light)" stroke="var(--brand)" strokeWidth="1.5"/>
+              <path d="M7 10l2 2 4-4" stroke="var(--brand)"
+                strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
           <span style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontWeight: 700, fontSize: 15 }}>GigShield</span>
         </div>
         <div style={{ color: 'var(--text-3)', fontSize: 12 }}>
@@ -269,12 +397,14 @@ export default function Home() {
           max-width: 740px; margin: 0 auto;
           text-align: center; padding: 80px 32px 60px;
         }
-        .home-hero-badge {
-          display: inline-flex; align-items: center; gap: 6px;
-          background: var(--blue-bg); border: 1px solid var(--blue-border);
-          color: var(--brand-dark); font-size: 12px; font-weight: 600;
-          padding: 5px 14px; border-radius: 100px; margin-bottom: 24px;
-        }
+       .home-hero-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--brand);
+  border: 1px solid var(--brand-dark);
+  color: white;
+  font-size: 12px; font-weight: 600;
+  padding: 5px 14px; border-radius: 100px; margin-bottom: 24px;
+} 
         .home-hero-title {
           font-size: 48px; font-weight: 800; letter-spacing: -1.5px;
           line-height: 1.1; margin-bottom: 20px;

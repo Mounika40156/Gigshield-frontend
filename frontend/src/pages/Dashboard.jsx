@@ -69,14 +69,22 @@ export default function Dashboard() {
     : 0;
 
   return (
+    
     <div className="app-shell">
       <Sidebar />
       <main className="main-content fade-up">
+        
 
         {/* AUTO-PAYOUT BANNER */}
         {autoClaim && (
           <div style={{ background: 'linear-gradient(135deg,#065f46,#047857)', borderRadius: 12, padding: '16px 20px', marginBottom: 20, display: 'flex', alignItems: 'center', gap: 16, boxShadow: '0 4px 20px rgba(5,150,105,0.25)' }} className="fade-up">
-            <div style={{ fontSize: 28 }}>💸</div>
+            // AFTER
+<div style={{ width: 40, height: 40, borderRadius: 10, background: 'rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+  <svg width="22" height="22" viewBox="0 0 16 16" fill="none" stroke="white" strokeWidth="1.5">
+    <rect x="1" y="3" width="14" height="10" rx="1.5"/>
+    <path d="M1 6h14M5 10h2M9 10h2" strokeLinecap="round"/>
+  </svg>
+</div>
             <div style={{ flex: 1 }}>
               <div style={{ fontWeight: 700, color: 'white', fontSize: 14, marginBottom: 3 }}>Zero-Touch Claim Initiated — {autoClaim.triggerLabel}</div>
               <div style={{ color: 'rgba(255,255,255,0.85)', fontSize: 13 }}>
@@ -102,21 +110,62 @@ export default function Dashboard() {
           </div>
         )}
 
-        <div className="page-header">
-          <h1>{greeting}, {user.name?.split(' ')[0]} 👋</h1>
-          <p>Here's your GigShield protection overview for this week</p>
-        </div>
+        <div className="page-header" style={{
+  background: 'linear-gradient(135deg, var(--brand) 0%, var(--accent, #4f46e5) 100%)',
+  borderRadius: 16,
+  padding: '24px 28px',
+  marginBottom: 24,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+}}>
+  <div>
+    <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.65)', marginBottom: 6 }}>
+      {new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' })}
+    </div>
+    <h1 style={{ fontSize: 26, fontWeight: 800, color: 'white', margin: 0, letterSpacing: '-0.5px' }}>
+      {greeting}, {user.name?.split(' ')[0]}
+    </h1>
+    <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: 13, marginTop: 6, marginBottom: 0 }}>
+      Here's your GigShield protection overview for this week
+    </p>
+  </div>
+  <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexShrink: 0 }}>
+    <div style={{ textAlign: 'right' }}>
+      <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.65)', fontWeight: 600, marginBottom: 4 }}>POLICY STATUS</div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+        <div style={{ width: 8, height: 8, borderRadius: '50%', background: policy ? '#34d399' : '#fbbf24' }} />
+        <span style={{ color: 'white', fontWeight: 700, fontSize: 13 }}>{policy ? policy.plan + ' Active' : 'No Policy'}</span>
+      </div>
+    </div>
+    <div style={{
+      width: 52, height: 52, borderRadius: 14,
+      background: 'rgba(255,255,255,0.15)',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+    }}>
+      <svg width="26" height="26" viewBox="0 0 20 20" fill="none">
+        <path d="M10 2L3 5v5c0 4.418 3.134 8.557 7 9.9C13.866 18.557 17 14.418 17 10V5L10 2z"
+          fill="rgba(255,255,255,0.2)" stroke="white" strokeWidth="1.5"/>
+        <path d="M7 10l2 2 4-4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    </div>
+  </div>
+</div>
 
         {/* Top Metrics */}
         <div className="grid-4 mb-20">
           {[
-            { label: 'Trust Score',    value: trustScore + ' / 100',            sub: 'Grows weekly with activity',      icon: '🏅', iconBg: '#EFF6FF' },
-            { label: 'Total Paid Out', value: '₹' + totalPaid.toLocaleString(), sub: paidClaims.length + ' claims',     icon: '💸', iconBg: '#ECFDF5' },
-            { label: 'Active Policy',  value: policy ? policy.plan + ' Plan' : 'None', sub: policy ? '₹' + policy.premium + '/week' : 'Click to activate', icon: '🛡️', iconBg: policy ? '#ECFDF5' : '#FFFBEB' },
-            { label: 'Fraud Blocked',  value: blockedClaims.length + ' claims',  sub: fraudStats.fraudBlocked + ' detected this session', icon: '🚫', iconBg: '#FEF2F2' },
+           { label: 'Trust Score',    value: trustScore + ' / 100',            sub: 'Grows weekly with activity',
+  icon: <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="var(--brand)" strokeWidth="1.5"><path d="M8 1l1.5 4.5H14l-3.5 2.5 1.5 4.5L8 10l-4 2.5 1.5-4.5L2 5.5h4.5L8 1z"/></svg> },
+{ label: 'Total Paid Out', value: '₹' + totalPaid.toLocaleString(), sub: paidClaims.length + ' claims',
+  icon: <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="var(--green)" strokeWidth="1.5"><rect x="1" y="3" width="14" height="10" rx="1.5"/><path d="M1 6h14M5 10h2M9 10h2" strokeLinecap="round"/></svg> },
+{ label: 'Active Policy',  value: policy ? policy.plan + ' Plan' : 'None', sub: policy ? '₹' + policy.premium + '/week' : 'Click to activate',
+  icon: <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke={policy ? 'var(--green)' : 'var(--yellow)'} strokeWidth="1.5"><path d="M8 1L2 4v4c0 3.5 2.5 6.8 6 7.9 3.5-1.1 6-4.4 6-7.9V4L8 1z"/><path d="M5.5 8l2 2 3-3" strokeLinecap="round" strokeLinejoin="round"/></svg> },
+{ label: 'Fraud Blocked',  value: blockedClaims.length + ' claims',  sub: fraudStats.fraudBlocked + ' detected this session',
+  icon: <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="var(--red)" strokeWidth="1.5"><circle cx="8" cy="8" r="7"/><path d="M5 5l6 6M11 5l-6 6" strokeLinecap="round"/></svg> },
           ].map((m, i) => (
             <div className="metric-card" key={i}>
-              <div className="metric-icon" style={{ background: m.iconBg }}>{m.icon}</div>
+              <div className="feature-icon" style={{ marginBottom: 12 }}>{m.icon}</div>
               <div className="metric-label">{m.label}</div>
               <div className="metric-value" style={{ fontSize: 18 }}>{m.value}</div>
               <div className="metric-sub">{m.sub}</div>
@@ -225,9 +274,46 @@ export default function Dashboard() {
         {/* Live Status Row */}
         <div className="grid-3 mb-20">
           {[
-            { label: 'Weather Status',  icon: '🌦️', value: activeTrigger && ['Heavy Rain','Heatwave','Severe AQI'].includes(activeTrigger.type) ? activeTrigger.value : 'All Clear', status: activeTrigger && ['Heavy Rain','Heatwave','Severe AQI'].includes(activeTrigger.type) ? 'TRIGGERED' : 'NORMAL', color: activeTrigger ? 'var(--red)' : 'var(--green)', bg: activeTrigger ? 'var(--red-bg)' : 'var(--green-bg)' },
-            { label: 'Flood Advisory',  icon: '🌊', value: activeTrigger?.type === 'Flood Alert' ? activeTrigger.value : 'No Advisory', status: activeTrigger?.type === 'Flood Alert' ? 'ADVISORY' : 'CLEAR', color: activeTrigger?.type === 'Flood Alert' ? 'var(--red)' : 'var(--green)', bg: activeTrigger?.type === 'Flood Alert' ? 'var(--red-bg)' : 'var(--green-bg)' },
-            { label: 'Platform Status', icon: '⚡', value: activeTrigger?.type === 'Platform Outage' ? activeTrigger.value : user.platform + ' Online', status: activeTrigger?.type === 'Platform Outage' ? 'OUTAGE' : 'ONLINE', color: activeTrigger?.type === 'Platform Outage' ? 'var(--red)' : 'var(--green)', bg: activeTrigger?.type === 'Platform Outage' ? 'var(--red-bg)' : 'var(--green-bg)' },
+           { 
+  label: 'Weather Status',
+  icon: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+      <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
+      <path d="M16 20v2M12 20v2M8 20v2"/>
+    </svg>
+  ),
+  value: activeTrigger && ['Heavy Rain','Heatwave','Severe AQI'].includes(activeTrigger.type) ? activeTrigger.value : 'All Clear',
+  status: activeTrigger && ['Heavy Rain','Heatwave','Severe AQI'].includes(activeTrigger.type) ? 'TRIGGERED' : 'NORMAL',
+  color: activeTrigger ? 'var(--red)' : 'var(--green)',
+  bg: activeTrigger ? 'var(--red-bg)' : 'var(--green-bg)'
+},
+{ 
+  label: 'Flood Advisory',
+  icon: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+      <path d="M2 14c1.5-2 3.5-2 5 0s3.5 2 5 0 3.5-2 5 0"/>
+      <path d="M2 18c1.5-2 3.5-2 5 0s3.5 2 5 0 3.5-2 5 0"/>
+      <path d="M12 2l3 7H9l3-7z"/>
+    </svg>
+  ),
+  value: activeTrigger?.type === 'Flood Alert' ? activeTrigger.value : 'No Advisory',
+  status: activeTrigger?.type === 'Flood Alert' ? 'ADVISORY' : 'CLEAR',
+  color: activeTrigger?.type === 'Flood Alert' ? 'var(--red)' : 'var(--green)',
+  bg: activeTrigger?.type === 'Flood Alert' ? 'var(--red-bg)' : 'var(--green-bg)'
+},
+{ 
+  label: 'Platform Status',
+  icon: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+      <rect x="2" y="3" width="20" height="14" rx="2"/>
+      <path d="M8 21h8M12 17v4"/>
+    </svg>
+  ),
+  value: activeTrigger?.type === 'Platform Outage' ? activeTrigger.value : user.platform + ' Online',
+  status: activeTrigger?.type === 'Platform Outage' ? 'OUTAGE' : 'ONLINE',
+  color: activeTrigger?.type === 'Platform Outage' ? 'var(--red)' : 'var(--green)',
+  bg: activeTrigger?.type === 'Platform Outage' ? 'var(--red-bg)' : 'var(--green-bg)'
+},
           ].map((s, i) => (
             <div key={i} style={{ background: s.bg, border: '1px solid var(--border)', borderRadius: 12, padding: '16px 18px', display: 'flex', alignItems: 'center', gap: 14 }}>
               <span style={{ fontSize: 24 }}>{s.icon}</span>

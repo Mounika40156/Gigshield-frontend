@@ -11,12 +11,63 @@ const PLANS = [
 ];
 
 const TRIGGERS = [
-  { icon:'🌧️', name:'Heavy Rain', threshold:'>60mm/day', api:'OpenWeatherMap', plans:['Basic','Standard','Premium'] },
-  { icon:'🌡️', name:'Heatwave', threshold:'>45°C', api:'OpenWeatherMap', plans:['Basic','Standard','Premium'] },
-  { icon:'😷', name:'Severe AQI', threshold:'>400 AQI', api:'CPCB AQI API', plans:['Standard','Premium'] },
-  { icon:'🌊', name:'Flood Alert', threshold:'Govt. advisory', api:'NDMA API', plans:['Standard','Premium'] },
-  { icon:'🚧', name:'Local Curfew', threshold:'Zone closure', api:'Social API (mock)', plans:['Premium'] },
-  { icon:'📵', name:'Platform Outage', threshold:'>2hr downtime', api:'Status API', plans:['Premium'] },
+  {
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+        <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
+        <path d="M12 20v2M8 20v2M16 20v2"/>
+      </svg>
+    ),
+    name:'Heavy Rain', threshold:'>60mm/day', api:'OpenWeatherMap', plans:['Basic','Standard','Premium']
+  },
+  {
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+        <circle cx="12" cy="12" r="4"/>
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+      </svg>
+    ),
+    name:'Heatwave', threshold:'>45°C', api:'OpenWeatherMap', plans:['Basic','Standard','Premium']
+  },
+  {
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+        <path d="M3 12h18M3 6h18M3 18h18"/>
+        <circle cx="19" cy="6" r="2" fill="currentColor" stroke="none"/>
+        <circle cx="19" cy="18" r="2" fill="currentColor" stroke="none"/>
+      </svg>
+    ),
+    name:'Severe AQI', threshold:'>400 AQI', api:'CPCB AQI API', plans:['Standard','Premium']
+  },
+  {
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+        <path d="M2 14c1.5-2 3.5-2 5 0s3.5 2 5 0 3.5-2 5 0"/>
+        <path d="M2 18c1.5-2 3.5-2 5 0s3.5 2 5 0 3.5-2 5 0"/>
+        <path d="M12 3l3 6H9l3-6z"/>
+      </svg>
+    ),
+    name:'Flood Alert', threshold:'Govt. advisory', api:'NDMA API', plans:['Standard','Premium']
+  },
+  {
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+        <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+      </svg>
+    ),
+    name:'Local Curfew', threshold:'Zone closure', api:'Social API (mock)', plans:['Premium']
+  },
+  {
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+        <rect x="2" y="3" width="20" height="14" rx="2"/>
+        <path d="M8 21h8M12 17v4"/>
+        <path d="M9 8l2 2-2 2M13 10h2"/>
+      </svg>
+    ),
+    name:'Platform Outage', threshold:'>2hr downtime', api:'Status API', plans:['Premium']
+  },
 ];
 
 export default function Policy() {
@@ -28,7 +79,6 @@ export default function Policy() {
 
   if(!user){ navigate('/register'); return null; }
 
-  // Fetch premiums from backend whenever selection or user changes
   useEffect(() => {
     let cancelled = false;
     async function loadPrices() {
@@ -45,7 +95,6 @@ export default function Policy() {
 
   const activate = async () => {
     setPaying(true);
-    // Call backend to activate policy
     const result = await apiActivatePolicy(user.id, selected);
     if (result && !result.error) {
       const newPolicy = {
@@ -62,7 +111,6 @@ export default function Policy() {
       setPaying(false);
       navigate('/dashboard');
     } else {
-      // Fallback
       const plan = PLANS.find(p => p.id === selected);
       const premium = premiumPrices[selected] || plan.price;
       const start = new Date(), end = new Date(start.getTime() + 7 * 24 * 60 * 60 * 1000);
@@ -88,9 +136,48 @@ export default function Policy() {
     <div className="app-shell">
       <Sidebar/>
       <main className="main-content fade-up">
-        <div className="page-header">
-          <h1>Insurance Policy</h1>
-          <p>Weekly parametric income protection — priced to match your payout cycle</p>
+
+        {/* GRADIENT HEADER */}
+        <div style={{
+          background: 'linear-gradient(135deg, var(--brand) 0%, var(--accent, #4f46e5) 100%)',
+          borderRadius: 16,
+          padding: '24px 28px',
+          marginBottom: 24,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
+          <div>
+            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.65)', marginBottom: 6 }}>
+              My Policy
+            </div>
+            <h1 style={{ fontSize: 26, fontWeight: 800, color: 'white', margin: 0, letterSpacing: '-0.5px' }}>
+              Insurance Policy
+            </h1>
+            <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: 13, marginTop: 6, marginBottom: 0 }}>
+              Weekly parametric income protection — priced to match your payout cycle
+            </p>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexShrink: 0 }}>
+            <div style={{ textAlign: 'right' }}>
+              <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.65)', fontWeight: 600, marginBottom: 4 }}>CURRENT PLAN</div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <div style={{ width: 8, height: 8, borderRadius: '50%', background: policy ? '#34d399' : '#fbbf24' }} />
+                <span style={{ color: 'white', fontWeight: 700, fontSize: 13 }}>{policy ? policy.plan + ' Active' : 'No Plan Yet'}</span>
+              </div>
+            </div>
+            <div style={{
+              width: 52, height: 52, borderRadius: 14,
+              background: 'rgba(255,255,255,0.15)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
+              <svg width="26" height="26" viewBox="0 0 20 20" fill="none">
+                <path d="M10 2L3 5v5c0 4.418 3.134 8.557 7 9.9C13.866 18.557 17 14.418 17 10V5L10 2z"
+                  fill="rgba(255,255,255,0.2)" stroke="white" strokeWidth="1.5"/>
+                <path d="M7 10l2 2 4-4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+          </div>
         </div>
 
         {/* Active policy */}
@@ -160,7 +247,7 @@ export default function Policy() {
               const active = t.plans.includes(selected);
               return (
                 <div key={i} style={{display:'flex',gap:12,alignItems:'center',padding:'12px 14px',borderRadius:9,background:active?'var(--blue-bg)':'var(--surface2)',border:'1px solid '+(active?'var(--blue-border)':'var(--border)'),opacity:active?1:0.5}}>
-                  <span style={{fontSize:18,flexShrink:0}}>{t.icon}</span>
+                  <span style={{flexShrink:0,color:active?'var(--brand)':'var(--text-3)'}}>{t.icon}</span>
                   <div>
                     <div style={{fontWeight:600,fontSize:13}}>{t.name}</div>
                     <div className="text-xs text-3">{t.threshold} · {t.api}</div>
