@@ -167,15 +167,16 @@ export default function Sidebar({ open, setOpen }) {
         {/* Bottom */}
         <div className="sidebar-bottom">
 
-          <button
-            className="nav-item"
-            onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-          >
-            <span className="nav-icon">
-              {theme === 'light' ? <MoonIcon /> : <SunIcon />}
-            </span>
-            Toggle Theme
-          </button>
+         <button
+  className="nav-item"
+  onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+>
+  <span className="nav-icon">
+    {theme === 'light' ? <MoonIcon /> : <SunIcon />}
+  </span>
+
+  {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
+</button>
 
           <button
             className="nav-item"

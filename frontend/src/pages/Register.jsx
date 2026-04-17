@@ -178,7 +178,7 @@ export default function Register() {
   const [otpVerified, setOtpVerified] = useState(false);
   const [gpsOk, setGpsOk] = useState(false);
   const [riskProfile, setRiskProfile] = useState(null);
-  const [form, setForm] = useState({ name: '', phone: '', email: '', platform: '', city: '', vehicleType: 'Bike', dailyEarnings: '', partnerIdFile: null, otp: '' });
+  const [form, setForm] = useState({ name: '', phone: '', email: '', platform: '', city: '', vehicleType: 'Bike', dailyEarnings: '', partnerIdFile: null,  companyId: '',otp: '' });
   const set = (k, v) => setForm(p => ({ ...p, [k]: v }));
 
   const sendOtp = () => { setLoading(true); setTimeout(() => { setOtpSent(true); setLoading(false); }, 1200); };
@@ -282,45 +282,65 @@ export default function Register() {
               </div>
             </>)}
 
-            {/* ── Step 1: Work Details ── */}
             {step === 1 && (<>
-              <div className="form-group">
-                <label className="form-label">Delivery Platform</label>
-                <select className="form-select" value={form.platform} onChange={e => set('platform', e.target.value)}>
-                  <option value="">Select your platform</option>
-                  {PLATFORMS.map(p => <option key={p} value={p}>{p}</option>)}
-                </select>
-              </div>
-              <div className="form-group">
-                <label className="form-label">Your City</label>
-                <div style={{ position: 'relative' }}>
-                  <span style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--color-text-secondary, #888)', display: 'flex', alignItems: 'center', pointerEvents: 'none' }}>
-                    <MapPinIcon />
-                  </span>
-                  <select className="form-select" value={form.city} onChange={e => set('city', e.target.value)} style={{ paddingLeft: 34 }}>
-                    <option value="">Select city</option>
-                    {CITIES.map(c => <option key={c} value={c}>{c}</option>)}
-                  </select>
-                </div>
-              </div>
-              <div className="grid-2">
-                <div className="form-group">
-                  <label className="form-label">Vehicle</label>
-                  <div style={{ position: 'relative' }}>
-                    <span style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--color-text-secondary, #888)', display: 'flex', alignItems: 'center', pointerEvents: 'none' }}>
-                      <TruckIcon />
-                    </span>
-                    <select className="form-select" value={form.vehicleType} onChange={e => set('vehicleType', e.target.value)} style={{ paddingLeft: 34 }}>
-                      <option>Bike</option><option>Auto</option><option>Scooter</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="form-group" style={{ marginBottom: 0 }}>
-                  <label className="form-label">Avg Daily Earnings (₹)</label>
-                  <InputWithIcon icon={<IndianRupeeIcon />} className="form-input" type="number" placeholder="800" value={form.dailyEarnings} onChange={e => set('dailyEarnings', e.target.value)} />
-                </div>
-              </div>
-            </>)}
+  <div className="form-group">
+    <label className="form-label">Delivery Platform</label>
+    <select className="form-select" value={form.platform} onChange={e => set('platform', e.target.value)}>
+      <option value="">Select your platform</option>
+      {PLATFORMS.map(p => <option key={p} value={p}>{p}</option>)}
+    </select>
+  </div>
+
+  <div className="form-group">
+    <label className="form-label">Your City</label>
+    <div style={{ position: 'relative' }}>
+      <span style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--color-text-secondary, #888)', display: 'flex', alignItems: 'center', pointerEvents: 'none' }}>
+        <MapPinIcon />
+      </span>
+      <select className="form-select" value={form.city} onChange={e => set('city', e.target.value)} style={{ paddingLeft: 34 }}>
+        <option value="">Select city</option>
+        {CITIES.map(c => <option key={c} value={c}>{c}</option>)}
+      </select>
+    </div>
+  </div>
+
+  {/* 👇 NEW COMPANY ID FIELD ADDED */}
+  <div className="form-group">
+    <label className="form-label">Company / Partner ID</label>
+
+    <InputWithIcon
+      icon={<IdCardIcon />}
+      className="form-input"
+      placeholder="Enter your company ID"
+      value={form.companyId}
+      onChange={e => set('companyId', e.target.value)}
+    />
+
+    {/* Demo text */}
+    <p className="text-xs text-3 mt-6">
+      Example: SWIGGY12345, ZOMATO-77881, BLINKIT_ID_1022
+    </p>
+  </div>
+
+  <div className="grid-2">
+    <div className="form-group">
+      <label className="form-label">Vehicle</label>
+      <div style={{ position: 'relative' }}>
+        <span style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--color-text-secondary, #888)', display: 'flex', alignItems: 'center', pointerEvents: 'none' }}>
+          <TruckIcon />
+        </span>
+        <select className="form-select" value={form.vehicleType} onChange={e => set('vehicleType', e.target.value)} style={{ paddingLeft: 34 }}>
+          <option>Bike</option><option>Auto</option><option>Scooter</option>
+        </select>
+      </div>
+    </div>
+
+    <div className="form-group" style={{ marginBottom: 0 }}>
+      <label className="form-label">Avg Daily Earnings (₹)</label>
+      <InputWithIcon icon={<IndianRupeeIcon />} className="form-input" type="number" placeholder="800" value={form.dailyEarnings} onChange={e => set('dailyEarnings', e.target.value)} />
+    </div>
+  </div>
+</>)}
 
             {/* ── Step 2: Verification ── */}
             {step === 2 && (<>
