@@ -5,7 +5,7 @@
  * attaches the JWT Bearer token from localStorage.
  */
 
-const BASE = 'http://localhost:8000';
+const BASE = 'https://gigshield-backend-production.up.railway.app';
 
 function getToken() {
   return localStorage.getItem('gs_admin_token') || '';
