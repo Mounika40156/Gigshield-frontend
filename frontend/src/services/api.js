@@ -10,7 +10,7 @@
  * can handle them gracefully without uncaught exceptions.
  */
 
-const BASE = 'https://gigshield-backend-production.up.railway.app/';
+const BASE = 'https://gigshield-backend-production.up.railway.app';
 
 async function request(path, options = {}) {
   try {
